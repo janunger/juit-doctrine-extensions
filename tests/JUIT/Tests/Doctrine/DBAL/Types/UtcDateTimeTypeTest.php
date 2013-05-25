@@ -53,7 +53,8 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf("\DateTime", $actual);
         $this->assertEquals(date_default_timezone_get(), $actual->getTimezone()->getName());
 
-        $expected = new \DateTime("2013-05-12 00:00:00");
+        $expected = new \DateTime("2013-05-11 22:00:00", new \DateTimeZone("UTC"));
+        $expected->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         $this->assertEquals($expected, $actual);
     }
