@@ -54,7 +54,8 @@ class UtcDateTimeType extends DateTimeType
             return null;
         }
 
-        $value->setTimezone(new DateTimeZone('UTC'));
+        $value->setTimezone(self::getUTCDateTimeZone());
+
         return $value->format($platform->getDateTimeFormatString());
     }
 
