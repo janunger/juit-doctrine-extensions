@@ -2,7 +2,7 @@
 
 namespace JUIT\Doctrine\DBAL\Types;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
@@ -35,7 +35,7 @@ class UtcDateTimeType extends DateTimeType
     }
 
     /**
-     * @param DateTime $value
+     * @param DateTimeImmutable $value
      * @param AbstractPlatform $platform
      * @return null|string
      * @throws ConversionException
@@ -45,11 +45,11 @@ class UtcDateTimeType extends DateTimeType
         if ($value === null) {
             return null;
         }
-        if (!$value instanceof DateTime) {
+        if (!$value instanceof DateTimeImmutable) {
             throw ConversionException::conversionFailed($value, $this->getName());
         }
 
-        $value->setTimezone(self::getUTCDateTimeZone());
+        $value = $value->setTimezone(self::getUTCDateTimeZone());
 
         return $value->format($platform->getDateTimeFormatString());
     }
@@ -57,7 +57,7 @@ class UtcDateTimeType extends DateTimeType
     /**
      * @param null|string $value
      * @param AbstractPlatform $platform
-     * @return DateTime|null
+     * @return DateTimeImmutable|null
      * @throws ConversionException
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
@@ -66,7 +66,7 @@ class UtcDateTimeType extends DateTimeType
             return null;
         }
 
-        $val = DateTime::createFromFormat(
+        $val = DateTimeImmutable::createFromFormat(
             $platform->getDateTimeFormatString(),
             $value,
             self::getUTCDateTimeZone()
@@ -75,7 +75,7 @@ class UtcDateTimeType extends DateTimeType
             throw ConversionException::conversionFailed($value, $this->getName());
         }
 
-        $val->setTimezone(self::getDefaultDateTimeZone());
+        $val = $val->setTimezone(self::getDefaultDateTimeZone());
 
         return $val;
     }

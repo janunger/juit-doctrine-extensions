@@ -2,7 +2,7 @@
 
 namespace JUIT\Tests\Doctrine\DBAL\Types;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Types\ConversionException;
@@ -31,7 +31,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_converts_a_given_date_time_instance_to_a_normalized_database_value()
     {
-        $date = new DateTime('1973-05-12 00:00:00', new DateTimeZone('Europe/Berlin'));
+        $date = new DateTimeImmutable('1973-05-12 00:00:00', new DateTimeZone('Europe/Berlin'));
 
         $expected = '1973-05-11 23:00:00';
         $actual = $this->SUT->convertToDatabaseValue($date, $this->platform);
@@ -42,7 +42,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_converts_a_given_date_time_instance_with_daylight_savings_time_in_effect_to_a_normalized_database_value()
     {
-        $date = new DateTime('2013-05-12 00:00:00', new DateTimeZone('Europe/Berlin'));
+        $date = new DateTimeImmutable('2013-05-12 00:00:00', new DateTimeZone('Europe/Berlin'));
 
         $expected = '2013-05-11 22:00:00';
         $actual = $this->SUT->convertToDatabaseValue($date, $this->platform);
@@ -55,10 +55,10 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $actual = $this->SUT->convertToPHPValue('2013-05-11 22:00:00', $this->platform);
 
-        $this->assertInstanceOf(DateTime::class, $actual);
+        $this->assertInstanceOf(DateTimeImmutable::class, $actual);
         $this->assertEquals(date_default_timezone_get(), $actual->getTimezone()->getName());
 
-        $expected = new DateTime('2013-05-11 22:00:00', new DateTimeZone('UTC'));
+        $expected = new DateTimeImmutable('2013-05-11 22:00:00', new DateTimeZone('UTC'));
         $expected->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
         $this->assertEquals($expected, $actual);
