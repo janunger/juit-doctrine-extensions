@@ -81,4 +81,11 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(ConversionException::class);
         $this->type->convertToPHPValue('abcde', $this->platform);
     }
+
+    /** @test */
+    public function it_throws_an_exception_on_invalid_input_from_php()
+    {
+        $this->setExpectedException(ConversionException::class);
+        $this->type->convertToDatabaseValue('abcde', $this->platform);
+    }
 }

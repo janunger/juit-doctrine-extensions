@@ -38,11 +38,15 @@ class UtcDateTimeType extends DateTimeType
      * @param DateTime $value
      * @param AbstractPlatform $platform
      * @return null|string
+     * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if ($value === null) {
             return null;
+        }
+        if (!$value instanceof DateTime) {
+            throw ConversionException::conversionFailed($value, $this->getName());
         }
 
         $value->setTimezone(self::getUTCDateTimeZone());
