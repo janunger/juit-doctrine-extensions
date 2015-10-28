@@ -2,8 +2,8 @@
 
 namespace JUIT\Tests\Doctrine\DBAL\Types;
 
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\Tests\DBAL\Mocks\MockPlatform;
 use JUIT\Doctrine\DBAL\Types\UtcDateTimeType;
 
 class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
@@ -22,8 +22,8 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->platform = new MockPlatform();
         $this->type = Type::getType("utcdatetime");
+        $this->platform = new MySqlPlatform();
     }
 
     public function testDateTimeConvertsToNormalizedDatabaseValue()
