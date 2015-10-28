@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-        colors                      = "true"
-        convertErrorsToExceptions   = "true"
-        convertNoticesToExceptions  = "true"
-        convertWarningsToExceptions = "true"
-        processIsolation            = "false"
-        stopOnFailure               = "false"
-        strict                      = "true"
-        syntaxCheck                 = "false"
-        verbose                     = "true"
-        bootstrap                   = "bootstrap.php" >
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="../tests/bootstrap.php"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestSize="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         checkForUnintentionallyCoveredCode="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="true"
+         verbose="true"
+        >
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory>../tests</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
