@@ -18,7 +18,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        Type::addType('utcdatetime', 'JUIT\Doctrine\DBAL\Types\UtcDateTimeType');
+        Type::addType('utcdatetime', UtcDateTimeType::class);
     }
 
     protected function setUp()
@@ -27,7 +27,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->type = Type::getType('utcdatetime');
     }
 
-    public function testDateTimeConvertsToNormalizedDatabaseValue()
+    public function it_converts_a_given_date_time_instance_to_a_normalized_database_value()
     {
         $date = new DateTime('1973-05-12 00:00:00', new \DateTimeZone('Europe/Berlin'));
 
@@ -37,7 +37,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDateTimeWithDaylightSavingsTimeInEffectConvertsToNormalizedDatabaseValue()
+    public function it_converts_a_given_date_time_instance_with_daylight_savings_time_in_effect_to_a_normalized_database_value()
     {
         $date = new DateTime('2013-05-12 00:00:00', new \DateTimeZone('Europe/Berlin'));
 
@@ -47,7 +47,7 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNormalizedDatabaseValueConvertsToPHPValueWithDefaultDateTimeZone()
+    public function it_converts_a_database_value_to_a_date_time_instance_with_default_date_time_zone()
     {
         $actual = $this->type->convertToPHPValue('2013-05-11 22:00:00', $this->platform);
 
@@ -60,17 +60,17 @@ class UtcDateTimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNullConvertsToPHPValueNull()
+    public function it_converts_database_null_to_php_null()
     {
         $this->assertNull($this->type->convertToPHPValue(null, $this->platform));
     }
 
-    public function testNullConvertsToDatabaseValueNull()
+    public function it_converts_php_null_to_database_null()
     {
         $this->assertNull($this->type->convertToDatabaseValue(null, $this->platform));
     }
 
-    public function testThrowsExceptionOnInvalidDatabaseValue()
+    public function it_throws_an_exception_on_invalid_input()
     {
         $this->setExpectedException(ConversionException::class);
         $this->type->convertToPHPValue('abcde', $this->platform);
