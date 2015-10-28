@@ -7,23 +7,16 @@ use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
-use Doctrine\DBAL\Types\Type;
 
 class UtcDateTimeType extends DateTimeType
 {
-    /**
-     * @var null|DateTimeZone
-     */
+    /** @var null|DateTimeZone */
     private static $utcDateTimeZone = null;
 
-    /**
-     * @var null|DateTimeZone
-     */
+    /** @var null|DateTimeZone */
     private static $defaultDateTimeZone = null;
 
-    /**
-     * @return DateTimeZone
-     */
+    /** @return DateTimeZone */
     private static function getUTCDateTimeZone()
     {
         if (null === self::$utcDateTimeZone) {
@@ -32,9 +25,7 @@ class UtcDateTimeType extends DateTimeType
         return self::$utcDateTimeZone;
     }
 
-    /**
-     * @return DateTimeZone
-     */
+    /** @return DateTimeZone */
     private static function  getDefaultDateTimeZone()
     {
         if (null === self::$defaultDateTimeZone) {
